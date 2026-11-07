@@ -63,15 +63,15 @@ if 'threshold' not in st.session_state:
 
 st.title('качество вина')
 st.write('модель помогает отбирать хорошие вина по результатам лабораторного анализа')
+threshold = st.sidebar.slider(
+    'порог для всех предсказаний', min_value=0.0, max_value=1.0,
+    step=0.01, format='%.3f', key='threshold')
 single_tab, threshold_tab, batch_tab, weights_tab = st.tabs([
-    'одно вино', 'выбор порога', 'пакетное предсказание', 'коэффициенты'
+    'одно вино', 'модельные метрики', 'пакетное предсказание', 'коэффициенты'
 ])
 
 
 with threshold_tab:
-    st.slider('порог для всех предсказаний', min_value=0.0, max_value=1.0,
-              step=0.01, format='%.3f', key='threshold')
-    threshold = st.session_state['threshold']
     prediction_test = (probability_test >= threshold).astype(int)
 
     cols = st.columns(3)
